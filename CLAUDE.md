@@ -88,3 +88,104 @@ npm run test:e2e:headed     # E2E tests in headed browser
 - No localStorage/sessionStorage for sensitive data
 - Components clear state on unmount
 - 1MB message size limit enforced client-side
+
+## Commit Workflow Guidelines
+
+### Automated Commit Strategy
+- **Commit Frequency**: After every moderate, logical change
+- **What constitutes a moderate change**:
+  - Completing a single component or utility function
+  - Fixing a bug with tests
+  - Adding a new hook with implementation
+  - Updating documentation for a feature
+  - Refactoring a specific module
+  - Adding/updating tests for existing code
+
+### Branch Strategy
+- **Feature Work**: Always create feature branches
+  - Branch naming: `feature/description` (e.g., `feature/add-qr-export`)
+  - Bug fixes: `fix/description` (e.g., `fix/validation-edge-case`)
+  - Enhancements: `enhance/description` (e.g., `enhance/button-animations`)
+- **Main Branch**: Protected, only merge via PRs
+
+### Commit Message Style
+Follow conventional commits format:
+- `feat: add feature description`
+- `fix: fix bug description`
+- `refactor: refactor description`
+- `docs: documentation changes`
+- `test: test additions/updates`
+- `style: styling changes`
+
+### Pull Request Creation
+When a feature is complete:
+1. Automatically create PR using `/commit-push-pr`
+2. PR title: Clear, descriptive, professional
+3. PR description: Detailed but natural-sounding
+   - Describe what changed and why
+   - Include manual test results if relevant
+   - DO NOT mention AI, Claude, or automation
+   - Write as if a developer personally implemented it
+
+### Commit Instructions for Claude
+- **Proactive Committing**: Create commits automatically after completing each logical unit
+- **Use `/commit` command**: Let it generate appropriate commit messages
+- **Branch Creation**: Start new feature branches when beginning new work
+- **PR Automation**: When feature is complete, use `/commit-push-pr` to open PR
+- **Natural Language**: Write PR descriptions in first person ("I added...", "This fixes...")
+
+## Automated Workflow Rules for Claude
+
+### When Working on Features:
+1. **Start**: Create feature branch immediately
+   ```bash
+   git checkout -b feature/descriptive-name
+   ```
+
+2. **During Work**: Commit after each logical unit:
+   - After completing a component
+   - After fixing a bug
+   - After writing tests
+   - After updating documentation
+   - Use `/commit` to auto-generate messages
+
+3. **Feature Complete**: Automatically open PR
+   ```bash
+   /commit-push-pr
+   ```
+
+4. **PR Description Guidelines**:
+   - Use first person ("I implemented...", "This adds...")
+   - Be specific about changes
+   - Mention testing performed
+   - Keep it professional but natural
+   - NO mentions of AI, automation, or Claude
+
+### Example Workflow Session:
+```
+User: "Add dark mode toggle"
+Claude: Creates feature/add-dark-mode branch
+        Implements toggle component → commits
+        Adds state management → commits
+        Updates styling → commits
+        Tests implementation → commits
+        Automatically opens PR with description:
+
+        "Add dark mode toggle to application settings
+
+        This implements a dark mode toggle that persists user preferences
+        and applies theme changes across all components. Tested manually
+        across different browsers."
+```
+
+### Commit Cadence Guidelines:
+- **Small Changes** (< 20 lines): Can batch 2-3 together
+- **Moderate Changes** (20-100 lines): Commit immediately
+- **Large Changes** (100+ lines): Break into smaller commits
+
+### Branch Lifecycle:
+1. Create branch for feature/fix
+2. Make commits as you work (multiple commits fine)
+3. Push and create PR when done
+4. After merge, delete branch
+5. Return to main, pull latest
