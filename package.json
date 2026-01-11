@@ -13,7 +13,12 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:e2e:headed": "playwright test --headed"
+    "test:e2e:headed": "playwright test --headed",
+    "commit": "git add -A && git commit",
+    "feature": "git checkout -b feature/$npm_config_name",
+    "fix": "git checkout -b fix/$npm_config_name",
+    "pr": "gh pr create --fill",
+    "clean-branches": "git branch --merged | grep -v '\\*\\|main' | xargs -n 1 git branch -d"
   },
   "dependencies": {
     "openpgp": "^6.3.0",
