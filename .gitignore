@@ -40,3 +40,7 @@ lerna-debug.log*
 *.tmp
 *.temp
 .cache/
+
+# Development documentation (for local use only)
+CLAUDE.md
+context-*.md
