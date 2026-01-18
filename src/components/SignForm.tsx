@@ -44,16 +44,19 @@ export function SignForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Sign a Message</h2>
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-soft border border-gray-200/50 p-6 hover:shadow-lg transition-shadow duration-300">
+        <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+          <span className="w-1 h-6 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full" />
+          Sign a Message
+        </h2>
 
         {/* Step 1: Private Key */}
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-sm font-medium">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white text-sm font-semibold shadow-md">
               1
             </span>
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-semibold text-gray-900">
               Enter Your Private Key
             </span>
           </div>
@@ -73,11 +76,11 @@ export function SignForm() {
         {/* Step 2: Passphrase (if needed) */}
         {(needsPassphrase || keyInfo?.isEncrypted) && (
           <div className="mb-6">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-sm font-medium">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white text-sm font-semibold shadow-md">
                 2
               </span>
-              <span className="text-sm font-medium text-gray-700">
+              <span className="text-sm font-semibold text-gray-900">
                 Enter Passphrase
               </span>
             </div>
@@ -104,11 +107,11 @@ export function SignForm() {
 
         {/* Step 3: Message */}
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-sm font-medium">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white text-sm font-semibold shadow-md">
               {needsPassphrase || keyInfo?.isEncrypted ? '3' : '2'}
             </span>
-            <span className="text-sm font-medium text-gray-700">Enter Message to Sign</span>
+            <span className="text-sm font-semibold text-gray-900">Enter Message to Sign</span>
           </div>
           <MessageInput
             id="message-to-sign"
@@ -171,7 +174,7 @@ export function SignForm() {
         <button
           type="submit"
           disabled={isLoading || !privateKey.trim() || !message.trim()}
-          className="w-full py-3 px-4 bg-primary text-white font-medium rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full py-3 px-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
         >
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">
@@ -198,19 +201,26 @@ export function SignForm() {
               Signing...
             </span>
           ) : (
-            'Sign Message'
+            <span className="flex items-center justify-center gap-2">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+              Sign Message
+            </span>
           )}
         </button>
       </div>
 
       {/* Step 4: Output */}
       {signedOutput && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-success text-white text-sm font-medium">
-              {needsPassphrase || keyInfo?.isEncrypted ? '4' : '3'}
+        <div className="bg-gradient-to-br from-success/5 to-success/10 backdrop-blur-sm rounded-2xl shadow-soft border border-success/20 p-6 animate-slide-up">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-success to-success/90 text-white text-sm font-semibold shadow-md">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
             </span>
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-semibold text-gray-900">
               {detachedSignature ? 'Detached Signature' : 'Signed Message'}
             </span>
           </div>
