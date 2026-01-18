@@ -48,16 +48,19 @@ export function VerifyForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Verify a Signature</h2>
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-soft border border-gray-200/50 p-6 hover:shadow-lg transition-shadow duration-300">
+        <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+          <span className="w-1 h-6 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full" />
+          Verify a Signature
+        </h2>
 
         {/* Step 1: Public Key */}
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-sm font-medium">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white text-sm font-semibold shadow-md">
               1
             </span>
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-semibold text-gray-900">
               Enter Signer's Public Key
             </span>
           </div>
@@ -76,11 +79,11 @@ export function VerifyForm() {
 
         {/* Step 2: Signed Message */}
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-sm font-medium">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white text-sm font-semibold shadow-md">
               2
             </span>
-            <span className="text-sm font-medium text-gray-700">Paste Signed Message</span>
+            <span className="text-sm font-semibold text-gray-900">Paste Signed Message</span>
           </div>
           <DropZone onDrop={setSignedMessage} hint="Drop signed message file">
             <textarea
@@ -116,7 +119,7 @@ export function VerifyForm() {
         <button
           type="submit"
           disabled={isLoading || !publicKey.trim() || !signedMessage.trim()}
-          className="w-full py-3 px-4 bg-primary text-white font-medium rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full py-3 px-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
         >
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">
@@ -143,19 +146,30 @@ export function VerifyForm() {
               Verifying...
             </span>
           ) : (
-            'Verify Signature'
+            <span className="flex items-center justify-center gap-2">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              Verify Signature
+            </span>
           )}
         </button>
       </div>
 
       {/* Verification Result */}
       {result && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-success text-white text-sm font-medium">
-              3
+        <div className={`backdrop-blur-sm rounded-2xl shadow-soft p-6 animate-slide-up ${result.valid ? 'bg-gradient-to-br from-success/5 to-success/10 border border-success/20' : 'bg-gradient-to-br from-error/5 to-error/10 border border-error/20'}`}>
+          <div className="flex items-center gap-3 mb-4">
+            <span className={`flex items-center justify-center w-8 h-8 rounded-xl text-white text-sm font-semibold shadow-md ${result.valid ? 'bg-gradient-to-br from-success to-success/90' : 'bg-gradient-to-br from-error to-error/90'}`}>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {result.valid ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                )}
+              </svg>
             </span>
-            <span className="text-sm font-medium text-gray-700">Verification Result</span>
+            <span className="text-sm font-semibold text-gray-900">Verification Result</span>
           </div>
 
           {result.valid ? (

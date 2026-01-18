@@ -42,16 +42,19 @@ export function DecryptForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Decrypt a Message</h2>
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-soft border border-gray-200/50 p-6 hover:shadow-lg transition-shadow duration-300">
+        <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+          <span className="w-1 h-6 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full" />
+          Decrypt a Message
+        </h2>
 
         {/* Step 1: Private Key */}
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-sm font-medium">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white text-sm font-semibold shadow-md">
               1
             </span>
-            <span className="text-sm font-medium text-gray-700">Enter Your Private Key</span>
+            <span className="text-sm font-semibold text-gray-900">Enter Your Private Key</span>
           </div>
           <KeyInput
             id="private-key"
@@ -69,11 +72,11 @@ export function DecryptForm() {
         {/* Step 2: Passphrase (conditional) */}
         {(needsPassphrase || (keyInfo && keyInfo.isEncrypted)) && (
           <div className="mb-6">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-sm font-medium">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white text-sm font-semibold shadow-md">
                 2
               </span>
-              <span className="text-sm font-medium text-gray-700">
+              <span className="text-sm font-semibold text-gray-900">
                 Enter Passphrase (key is protected)
               </span>
             </div>
@@ -102,11 +105,11 @@ export function DecryptForm() {
 
         {/* Step 3: Encrypted Message */}
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-sm font-medium">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white text-sm font-semibold shadow-md">
               {needsPassphrase || (keyInfo && keyInfo.isEncrypted) ? '3' : '2'}
             </span>
-            <span className="text-sm font-medium text-gray-700">Paste Encrypted Message</span>
+            <span className="text-sm font-semibold text-gray-900">Paste Encrypted Message</span>
           </div>
           <MessageInput
             id="encrypted-message"
@@ -136,7 +139,7 @@ export function DecryptForm() {
         <button
           type="submit"
           disabled={isLoading || !privateKey.trim() || !encryptedMessage.trim()}
-          className="w-full py-3 px-4 bg-primary text-white font-medium rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full py-3 px-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
         >
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">
@@ -163,32 +166,26 @@ export function DecryptForm() {
               Decrypting...
             </span>
           ) : (
-            'Decrypt Message'
+            <span className="flex items-center justify-center gap-2">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+              </svg>
+              Decrypt Message
+            </span>
           )}
         </button>
       </div>
 
       {/* Step 4: Output */}
       {decryptedOutput && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-success text-white text-sm font-medium">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
+        <div className="bg-gradient-to-br from-success/5 to-success/10 backdrop-blur-sm rounded-2xl shadow-soft border border-success/20 p-6 animate-slide-up">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-success to-success/90 text-white text-sm font-semibold shadow-md">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </span>
-            <span className="text-sm font-medium text-gray-700">Decrypted Message</span>
+            <span className="text-sm font-semibold text-gray-900">Decrypted Message</span>
           </div>
           <OutputDisplay
             id="decrypted-output"
@@ -201,23 +198,9 @@ export function DecryptForm() {
           <button
             type="button"
             onClick={clearAll}
-            className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-error border border-error/30 rounded-lg hover:bg-error/10 focus:outline-none focus:ring-2 focus:ring-error/50 transition-colors"
+            className="mt-4 text-sm font-medium text-secondary hover:text-primary transition-colors"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-              />
-            </svg>
-            Clear All (Secure Wipe)
+            Clear All & Start Over
           </button>
         </div>
       )}
