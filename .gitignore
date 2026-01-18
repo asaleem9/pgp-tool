@@ -44,3 +44,7 @@ lerna-debug.log*
 # Development documentation (for local use only)
 CLAUDE.md
 context-*.md
+
+# Claude Code local configuration
+.claude/
+.playwright-mcp/
